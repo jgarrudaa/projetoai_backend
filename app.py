@@ -23,20 +23,24 @@ def apenas_numeros(valor):
     return re.sub(r'\D', '', str(valor))
 
 def generate_contract(dados_contrato):
-    # O prompt envia os documentos limpos e a IA se encarrega de formatá-los no texto jurídico
     conteudo_prompt = f"""
     Gere um contrato comercial com as seguintes especificações:
     - Tipo de Contrato: {dados_contrato.get('tipo_contrato')}
     
     - Contratante (Nome/Razão Social): {dados_contrato.get('contratante_nome')}
-    - Contratante (Apenas números do CPF/CNPJ): {dados_contrato.get('contratante_documento')}
+    - Contratante (Documento): {dados_contrato.get('contratante_documento')}
     
     - Contratado (Nome/Razão Social): {dados_contrato.get('contratado_nome')}
-    - Contratado (Apenas números do CPF/CNPJ): {dados_contrato.get('contratado_documento')}
+    - Contratado (Documento): {dados_contrato.get('contratado_documento')}
     
     - Objeto do Contrato: {dados_contrato.get('objeto')}
-    - Valores e Condições de Pagamento: {dados_contrato.get('pagamento')}
-    - Cláusulas Opcionais: {dados_contrato.get('clausulas_extras', 'Nenhuma informada.')}
+    
+    - DETALHES FINANCEIROS (Formate isso em uma Cláusula de Preço e Pagamento robusta):
+      * Valor Total do Contrato: {dados_contrato.get('pagamento_valor')}
+      * Meio de Pagamento Escolhido: {dados_contrato.get('pagamento_forma')}
+      * Condições e Prazos de Vencimento: {dados_contrato.get('pagamento_prazo')}
+      
+    - Cláusulas Opcionais adicionais: {dados_contrato.get('clausulas_extras', 'Nenhuma informada.')}
     """
     
     response = client.models.generate_content(
@@ -70,7 +74,8 @@ def generate():
     # 1. Validação de campos obrigatórios
     campos_obrigatorios = [
         "tipo_contrato", "contratante_nome", "contratante_documento", 
-        "contratado_nome", "contratado_documento", "objeto", "pagamento"
+        "contratado_nome", "contratado_documento", "objeto",
+        "pagamento_valor", "pagamento_forma", "pagamento_prazo"
     ]
     campos_ausentes = [campo for campo in campos_obrigatorios if not data.get(campo)]
     

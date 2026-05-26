@@ -28,4 +28,5 @@ Diretrizes específicas por Tipo de Contrato:
 
 Ao montar o 'preambulo', formate os números de CPF/CNPJ enviados no padrão brasileiro. 
 Você DEVE preencher todos os campos do esquema fornecido estritamente em português.
+Ao redigir a propriedade 'valores_pagamento', junte as informações de Valor Total, Meio de Pagamento e Condições de Prazo enviadas em uma redação jurídica fluida, clara, que estipule as obrigações financeiras e eventuais penalidades por inadimplência básica de forma profissional.
 """
